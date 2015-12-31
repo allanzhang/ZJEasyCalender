@@ -5,28 +5,16 @@
 //  Created by Allan on 14-6-23.
 //  Copyright (c) 2014年 Allan. All rights reserved.
 //
-
 // 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
 
 #import "CalendarHomeViewController.h"
-#import "Color.h"
+#import "CalendarDefines.h"
 
 @interface CalendarHomeViewController ()
 
 @end
 
 @implementation CalendarHomeViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -58,6 +46,5 @@
 {
     [self.navigationItem setTitle:calendartitle];
 }
-
 
 @end

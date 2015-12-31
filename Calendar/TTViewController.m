@@ -5,16 +5,12 @@
 //  Created by Allan on 14-7-1.
 //  Copyright (c) 2014年 Allan. All rights reserved.
 //
-
 // 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
 
 #import "TTViewController.h"
 #import "CalendarHomeViewController.h"
 #import "CalendarViewController.h"
-//#import "CalendarDayModel.h"
-#import "Color.h"
+#import "CalendarDefines.h"
 
 @interface TTViewController ()
 {
@@ -26,28 +22,13 @@
 
 @implementation TTViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-//    self.navigationController.navigationBar.backgroundColor = COLOR_THEME;
-    self.navigationController.navigationBar.tintColor = COLOR_THEME;
-    self.navigationItem.title = @"";
-    
-    
-    
-    UIButton *but1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 200, 300, 50)];
-    but1.backgroundColor = COLOR_THEME;
+    UIButton *but1 = [[UIButton alloc]initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, 50)];
+    but1.backgroundColor = COLOR_NORMAL_THEME;
     but1.tintColor = [UIColor whiteColor];
     but1.tag = 1;
     [but1 setTitle:@"走起" forState:UIControlStateNormal];
@@ -55,51 +36,29 @@
     [self.view addSubview:but1];
 }
 
-
 -(void)click:(UIButton *)but
 {
-
     if (!chvc) {
-        
         chvc = [[CalendarHomeViewController alloc]init];
-        
         chvc.calendartitle = @"日历";
         [chvc setStartDateString:@"2010-04-01" toDateString:@"2016-12-31" andSelectedDateString:nil];
-        
     }
 
-    
-
-   
-
     chvc.calendarblock = ^(CalendarDayModel *model){
-        
         NSLog(@"\n---------------------------");
         NSLog(@"1星期 %@",[model getWeek]);
         NSLog(@"2字符串 %@",[model toString]);
         NSLog(@"3节日  %@",model.holiday);
         
         if (model.holiday) {
-            
             [but setTitle:[NSString stringWithFormat:@"%@ %@ %@",[model toString],[model getWeek],model.holiday] forState:UIControlStateNormal];
-            
-        }else{
-        
-            [but setTitle:[NSString stringWithFormat:@"%@ %@",[model toString],[model getWeek]] forState:UIControlStateNormal];
-            
+        }
+        else
+        {
+            [but setTitle:[NSString stringWithFormat:@"%@ %@ %@",[model toString],[model getWeek], model.Chinese_calendar] forState:UIControlStateNormal];
         }
     };
-    
     [self.navigationController pushViewController:chvc animated:YES];
-    
-    
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

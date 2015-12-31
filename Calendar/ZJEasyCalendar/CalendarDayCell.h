@@ -4,19 +4,16 @@
 //  Created by Allan on 14-8-20.
 //  Copyright (c) 2014年 Allan. All rights reserved.
 //
-
 // 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
 
 #import <UIKit/UIKit.h>
 #import "CalendarDayModel.h"
-#import "Color.h"
+#import "CalendarDefines.h"
 
 @interface CalendarDayCell : UICollectionViewCell
 {
-    UILabel *day_lab;//今天的日期或者是节日
-    UILabel *day_title;//显示标签
+    UILabel *day_lab;//今天的日期
+    UILabel *day_title;//显示农历或者节日
     UIImageView *imgview;//选中时的图片
 }
 

@@ -5,10 +5,7 @@
 //  Created by Allan on 14-6-6.
 //  Copyright (c) 2014年 Allan. All rights reserved.
 //
-
 // 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
 
 #import "NSDate+WQCalendarLogic.h"
 
@@ -21,7 +18,6 @@
     // 频繁调用 [NSCalendar currentCalendar] 可能存在性能问题
     return [[NSCalendar currentCalendar] rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:self].length;
 }
-
 
 //获取这个月有多少周
 - (NSUInteger)numberOfWeeksInCurrentMonth
@@ -40,15 +36,11 @@
     return weeks;
 }
 
-
-
 /*计算这个月的第一天是礼拜几*/
 - (NSUInteger)weeklyOrdinality
 {
     return [[NSCalendar currentCalendar] ordinalityOfUnit:NSDayCalendarUnit inUnit:NSWeekCalendarUnit forDate:self];
 }
-
-
 
 //计算这个月最开始的一天
 - (NSDate *)firstDayOfCurrentMonth
@@ -58,7 +50,6 @@
     NSAssert1(ok, @"Failed to calculate the first day of the month based on %@", self);
     return startDate;
 }
-
 
 - (NSDate *)lastDayOfCurrentMonth
 {
@@ -111,34 +102,20 @@
             NSWeekdayCalendarUnit fromDate:self];
 }
 
-
-//-----------------------------------------
-//
 //NSString转NSDate
 - (NSDate *)dateFromString:(NSString *)dateString
 {
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-//    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     [dateFormatter setDateFormat: @"yyyy-MM-dd"];
-    
     NSDate *destDate= [dateFormatter dateFromString:dateString];
-    
     return destDate;
-    
 }
-
-
 
 //NSDate转NSString
 - (NSString *)stringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    //zzz表示时区，zzz可以删除，这样返回的日期字符将不包含时区信息。
-    
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     
     NSString *destDateString = [dateFormatter stringFromDate:date];
@@ -146,17 +123,13 @@
     return destDateString;
 }
 
-
 + (int)getDayNumbertoDay:(NSDate *)today beforDay:(NSDate *)beforday
 {
-    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];//日历控件对象
     NSDateComponents *components = [calendar components:NSDayCalendarUnit fromDate:today toDate:beforday options:0];
-    //    NSDateComponents *components = [calendar components:NSMonthCalendarUnit|NSDayCalendarUnit fromDate:today toDate:beforday options:0];
     NSInteger day = [components day];//两个日历之间相差多少月//    NSInteger days = [components day];//两个之间相差几天
     return day;
 }
-
 
 //周日是“1”，周一是“2”...
 -(int)getWeekIntValueWithDate
@@ -170,9 +143,6 @@
                                                    NSWeekdayCalendarUnit) fromDate:self];
     return weekIntValue = [comps weekday];
 }
-
-
-
 
 //判断日期是今天,明天,后天,周几
 -(NSString *)compareIfTodayWithDate
@@ -214,8 +184,6 @@
         return [NSDate getWeekStringFromInteger:weekIntValue];//周几
     }
 }
-
-
 
 //通过数字返回星期几
 +(NSString *)getWeekStringFromInteger:(int)week

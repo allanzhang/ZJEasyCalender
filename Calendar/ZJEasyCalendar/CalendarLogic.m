@@ -5,10 +5,7 @@
 //  Created by Allan on 14-7-3.
 //  Copyright (c) 2014年 Allan. All rights reserved.
 //
-
 // 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com
 
 #import "CalendarLogic.h"
 
@@ -24,7 +21,6 @@
 
 
 @implementation CalendarLogic
-
 
 //计算当前日期之前几天或者是之后的几天（负数是之前几天，正数是之后的几天）
 - (NSMutableArray *)reloadCalendarView:(NSDate *)date  selectDate:(NSDate *)selectdate needDays:(int)days_number
@@ -62,7 +58,6 @@
     NSMutableArray *calendarMonth = [[NSMutableArray alloc]init];//每个月的dayModel数组
     
     for (int i = 0; i <= months; i++) {
-        
         NSDate *month = [today dayInTheFollowingMonth:i];
         NSMutableArray *calendarDays = [[NSMutableArray alloc]init];
         [self calculateDaysInPreviousMonthWithDate:month andArray:calendarDays];
@@ -70,17 +65,11 @@
         [self calculateDaysInFollowingMonthWithDate:month andArray:calendarDays];//计算下月份的天数
         [calendarMonth insertObject:calendarDays atIndex:i];
     }
-    
     return calendarMonth;
-    
 }
 
-
-
 #pragma mark - 日历上+当前+下月份的天数
-
 //计算上月份的天数
-
 - (NSMutableArray *)calculateDaysInPreviousMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
 {
     NSUInteger weeklyOrdinality = [[date firstDayOfCurrentMonth] weeklyOrdinality];//计算这个的第一天是礼拜几,并转为int型
@@ -95,15 +84,10 @@
         calendarDay.style = CellDayTypeEmpty;//不显示
         [array addObject:calendarDay];
     }
-    
-    
-    return NULL;
+    return nil;
 }
 
-
-
 //计算下月份的天数
-
 - (void)calculateDaysInFollowingMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
 {
     NSUInteger weeklyOrdinality = [[date lastDayOfCurrentMonth] weeklyOrdinality];
@@ -119,12 +103,9 @@
     }
 }
 
-
 //计算当月的天数
-
 - (void)calculateDaysInCurrentMonthWithDate:(NSDate *)date andArray:(NSMutableArray *)array
 {
-    
     NSUInteger daysCount = [date numberOfDaysInCurrentMonth];//计算这个月有多少天
     NSDateComponents *components = [date YMDComponents];//今天日期的年月日
     
@@ -137,16 +118,11 @@
     }
 }
 
-
-
-
 - (void)changStyle:(CalendarDayModel *)calendarDay
 {
-    
     NSDateComponents *calendarToDay  = [today YMDComponents];//今天
     NSDateComponents *calendarbefore = [after YMDComponents];//最后一天
     NSDateComponents *calendarSelect = [select YMDComponents];//默认选择的那一天
-    
     
     //被点击选中
     if(calendarSelect.year == calendarDay.year &
@@ -155,10 +131,9 @@
         
         calendarDay.style = CellDayTypeClick;
         selectcalendarDay = calendarDay;
-        
-      
     //没被点击选中
-    }else{
+    }
+    else{
         
         //昨天乃至过去的时间设置一个灰度
         if (calendarToDay.year >= calendarDay.year &
@@ -183,11 +158,10 @@
                 
             //工作日
             }else{
-                calendarDay.style = CellDayTypeFutur;
+                calendarDay.style = CellDayTypeFuture;
             }
         }
     }
-    
     
     //===================================
     //这里来判断节日
@@ -258,20 +232,12 @@
     }else if (calendarDay.month == 11 &&
               calendarDay.day == 11){
         calendarDay.holiday = @"光棍节";
-        
-    }else{
-        
-        
-        //            这里写其它的节日
-        
     }
-    
 }
 
 #pragma mark - 农历转换函数
 
 -(void)LunarForSolarYear:(CalendarDayModel *)calendarDay{
-    
     
     NSString *solarYear = [self LunarForSolarYear:calendarDay.year Month:calendarDay.month Day:calendarDay.day];
     
@@ -340,17 +306,10 @@
         calendarDay.holiday = @"除夕";
         
     }
-    
-    
     calendarDay.Chinese_calendar = solarYear_arr[1];
-    
-    
-    
 }
 
 -(NSString *)LunarForSolarYear:(int)wCurYear Month:(int)wCurMonth Day:(int)wCurDay{
-    
-
     
     //农历日期名
     NSArray *cDayName =  [NSArray arrayWithObjects:@"*",@"初一",@"初二",@"初三",@"初四",@"初五",@"初六",@"初七",@"初八",@"初九",@"初十",
@@ -441,32 +400,39 @@
     
     //合并
     NSString *lunarDate = [NSString stringWithFormat:@"%@-%@",szNongliMonth,szNongliDay];
-    
     return lunarDate;
 }
 
-
-
-
-- (void)selectLogic:(CalendarDayModel *)day
+- (void)selectLogic:(CalendarDayModel *) day
 {
-    
     if (day.style == CellDayTypeClick) {
         return;
     }
     
     day.style = CellDayTypeClick;
+    
     //周末
-    if (selectcalendarDay.week == 1 || selectcalendarDay.week == 7){
+    if (selectcalendarDay.week == 1 || selectcalendarDay.week == 7)
+    {
         selectcalendarDay.style = CellDayTypeWeek;
-        
-    //工作日
-    }else{
-        selectcalendarDay.style = CellDayTypeFutur;
+    }
+    
+    NSDateComponents *c = [[NSDateComponents alloc] init];
+    c.year = [NSDate date].YMDComponents.year;
+    c.month = [NSDate date].YMDComponents.month;
+    c.day = [NSDate date].YMDComponents.day;
+    NSDate *todayDate =  [[NSCalendar currentCalendar] dateFromComponents:c];
+    
+    
+    NSComparisonResult result = [selectcalendarDay.date compare:todayDate];
+    if (result == NSOrderedSame || result == NSOrderedDescending) {
+        selectcalendarDay.style = CellDayTypeFuture;
+    }
+    else
+    {
+        selectcalendarDay.style = CellDayTypePast;
     }
     selectcalendarDay = day;
 }
-
-
 
 @end
